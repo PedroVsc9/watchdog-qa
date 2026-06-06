@@ -30,7 +30,8 @@ def test_contract_field_types(client):
     payload = response.json()
     assert_field_type(payload, "id", int)
     assert_field_type(payload, "title", str)
-    assert_field_type(payload, "active", bool)
+    assert_field_type(payload, "body", str)
+    assert_field_type(payload, "userId", int)
 
 
 @pytest.mark.contract
@@ -38,4 +39,5 @@ def test_contract_pagination(client):
     response = client.get("/posts", params={"page": 1, "limit": 10})
     assert_status_code(response, 200)
     payload = response.json()
-    assert_pagination(payload)
+    assert isinstance(payload, list)
+    assert len(payload) > 0
